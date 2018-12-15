@@ -24,7 +24,8 @@ import com.jpa.service.UserServiceImpl;
  * @author Aniruddha.Raje
  *
  */
-@RestController // This means that this class is a Controller
+//@Controller
+@RestController // This means that this class is a Controller(@Controller + @ResponseBody)
 @RequestMapping(path = "/api") // This means URL's start with /demo (after Application path)
 public class MainController {
 
@@ -36,6 +37,7 @@ public class MainController {
 	private UserServiceImpl service;
 
 	@GetMapping(path = "/all")
+	//@ResponseBody
 	public @ResponseBody Iterable<User> getAllUsers() {
 		// This returns a JSON or XML with the users
 		return service.listUsers();
@@ -56,19 +58,16 @@ public class MainController {
 
 	@GetMapping(path = "/findById")
 	public @ResponseBody Optional<User> getAllUsers(@RequestParam Integer id) {
-		// This returns a JSON or XML with the users
 		return service.getUserById(id);
 	}
 
 	@GetMapping(path = "/findUsersByIds")
 	public @ResponseBody Iterable<User> getUsersByIds(@RequestParam String ids) {
-		// This returns a JSON or XML with the users
 		return service.findUsersByIds(ids);
 	}
 
 	@GetMapping(path = "/findUsersByNameAndId")
 	public @ResponseBody Iterable<User> findUsersByNameAndId(@RequestParam String name, @RequestParam Integer id) {
-		// This returns a JSON or XML with the users
 		return service.findUsersByNameAndId(name, id);
 	}
 
@@ -79,7 +78,6 @@ public class MainController {
 		log.info("Name => " + name);
 		log.info("Role => " + role);
 		log.info("Age => " + age);
-		// This returns a JSON or XML with the users
 		return service.getUserById(id);
 	}
 

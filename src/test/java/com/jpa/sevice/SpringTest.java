@@ -28,31 +28,31 @@ public class SpringTest {
 	
 	static final Logger log = Logger.getLogger(SpringTest.class);
 
-	@Before
-	public void before() {
-		log.debug("================Before================");
-		System.out.println("");
-	}
-
-	@After
-	public void after() {
-		log.debug("================After================");
-	}
-
 	@BeforeClass
 	public static void beforeClass() {
-		log.debug("================Before Class================");
+		log.debug("\n============================= 1. Before Class =============================\n");
 	}
-
-	@AfterClass
-	public static void afterClass() {
-		log.debug("================After Class================");
+	
+	@Before
+	public void before() {
+		log.debug("\n============================= 2. Before =============================\n");
+		System.out.println("");
 	}
 
 	@Test
 	public void testListUsers() {
 		Iterable<User> users = service.listUsers();
 		log.debug(""+users);
+	}
+	
+	@After
+	public void after() {
+		log.debug("\n============================= 4. After =============================\n");
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		log.debug("\n============================= 5. After Class =============================\n");
 	}
 
 }
