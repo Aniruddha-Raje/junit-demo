@@ -4,12 +4,19 @@ import java.util.Optional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.jpa.models.User;
 import com.jpa.service.UserServiceImpl;
 
@@ -18,7 +25,7 @@ import com.jpa.service.UserServiceImpl;
  *
  */
 @RestController // This means that this class is a Controller
-@RequestMapping(path = "/demo") // This means URL's start with /demo (after Application path)
+@RequestMapping(path = "/api") // This means URL's start with /demo (after Application path)
 public class MainController {
 
 	static final Logger log = Logger.getLogger(MainController.class);
@@ -63,5 +70,48 @@ public class MainController {
 	public @ResponseBody Iterable<User> findUsersByNameAndId(@RequestParam String name, @RequestParam Integer id) {
 		// This returns a JSON or XML with the users
 		return service.findUsersByNameAndId(name, id);
+	}
+
+	// Path Variable
+	@RequestMapping(value = "/getByPathVariable/{id}/{name}/{role}", method = RequestMethod.GET)
+	public @ResponseBody Optional<User> getByPathVariable(@PathVariable Integer id, @PathVariable String name,
+			@PathVariable Integer role, @RequestParam Integer age) {
+		log.info("Name => " + name);
+		log.info("Role => " + role);
+		log.info("Age => " + age);
+		// This returns a JSON or XML with the users
+		return service.getUserById(id);
+	}
+
+	@PostMapping(path = "/post/{id}")
+	public @ResponseBody String updateUser(@RequestBody String request,
+			@PathVariable Integer id, @RequestParam String name) {
+		log.info("Id => " + id);
+		log.info("Name => " + name);
+
+		Gson gson = new Gson();
+		User user = gson.fromJson(request, User.class);
+		String stringifiedUser = gson.toJson(user);
+		log.info("User => " + stringifiedUser);
+
+		log.info("Post Called!");
+
+		return "ok";
+	}
+
+	@PutMapping(path = "/put")
+	public @ResponseBody String addUser() {
+
+		log.info("Put Called!");
+
+		return "ok";
+	}
+
+	@DeleteMapping(path = "/delete")
+	public @ResponseBody String deleteUser() {
+
+		log.info("Delete Called!");
+
+		return "ok";
 	}
 }
