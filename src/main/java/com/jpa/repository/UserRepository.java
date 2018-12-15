@@ -1,4 +1,4 @@
-package com.jpa.dao;
+package com.jpa.repository;
 
 import java.util.List;
 
@@ -21,6 +21,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 	@Query(value = "SELECT * FROM user where name = ?1 AND id = ?2", nativeQuery = true)
 	public List<User> findUsersByNameAndId(String name, Integer id);
 	
-	List<User> findAll();
+	public List<User> findAll();
 	
 }
