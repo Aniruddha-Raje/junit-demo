@@ -3,9 +3,10 @@
  */
 package com.jpa.service;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
+@PropertySource(value = {"classpath:application.properties"})
 public class DummyServiceImpl {
 	
-	@Autowired
-	@Qualifier("impl2")
+	//@Autowired
+	//@Qualifier("impl2")
+	@Resource(name="${beanName}")
 	Inf inf;
 	
 	static final Logger log = Logger.getLogger(DummyServiceImpl.class);
